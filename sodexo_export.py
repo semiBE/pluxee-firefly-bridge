@@ -60,6 +60,19 @@ def main():
     logger.info(f"Saved to {csv_filename}")
     print(f"Saved to {csv_filename}")
 
+    # --- New: Print and Log CSV Content ---
+    print("\n--- CSV Content Preview ---")
+    header = "Date, Description, Amount"
+    print(header)
+    logger.info("CSV Content Preview:")
+    
+    for row in cleaned:
+        row_str = ", ".join(row)
+        print(row_str)
+        logger.info(row_str)
+    print("---------------------------\n")
+    # --------------------------------------
+
     return csv_filename
 
 def send_post_request(json_config, csv_file):
@@ -77,7 +90,7 @@ def send_post_request(json_config, csv_file):
         print(f"POST request for {csv_file} successful. Status code {response.status_code}.")
         logger.info(f"POST request for {csv_file} successful. Status code {response.status_code}.")
     else:
-        logger.info(f"POST request for {csv_file} successful. Status code {response.status_code}.")
+        logger.info(f"POST request for {csv_file} failed. Status code {response.status_code}.")
         print(f"POST request failed with status code {response.status_code}.")
 
 if __name__ == "__main__":
