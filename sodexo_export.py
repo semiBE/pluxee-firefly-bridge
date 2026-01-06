@@ -23,9 +23,10 @@ giu_email = os.environ.get("GIU_EMAIL")
 giu_pwd = os.environ.get("GIU_PWD")
 url = os.environ.get("URL")
 
-
+logger.info(f"Target URL: {url}")
+logger.info(f"Token Length: {len(api_token) if api_token else 'EMPTY'}")
 #print(f"My API key is: {api_token}")
-#logger.info(f"My API key is: {api_token}")
+logger.info(f"My API key is: {api_token}")
 
 def main():
     # Authenticate
@@ -92,6 +93,10 @@ def send_post_request(json_config, csv_file):
     else:
         logger.info(f"POST request for {csv_file} failed. Status code {response.status_code}.")
         print(f"POST request failed with status code {response.status_code}.")
+	logger.error(f"POST request for {csv_file} failed.")
+        logger.error(f"Status Code: {response.status_code}")
+        logger.error(f"Response Body: {response.text}") # <--- THIS IS KEY
+        print(f"Server says: {response.text}")
 
 if __name__ == "__main__":
     for user in ["matteo","giulia"]:
