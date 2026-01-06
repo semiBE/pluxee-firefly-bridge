@@ -7,11 +7,22 @@ import os
 
 import logging
 
+from dotenv import load_dotenv
+
+# Load the .env file
+load_dotenv()
+
 # Configure logging for verbose Docker output
 logging.basicConfig(level=logging.INFO,stream=sys.stdout)
 logger = logging.getLogger(__name__)
 
-api_token = os.getenv("API_TOKEN")
+api_token = os.environ.get("API_TOKEN")
+mat_email = os.environ.get("MAT_EMAIL")
+mat_pwd = os.environ.get("MAT_PWD")
+giu_email = os.environ.get("GIU_EMAIL")
+giu_pwd = os.environ.get("GIU_PWD")
+url = os.environ.get("URL")
+
 
 #print(f"My API key is: {api_token}")
 #logger.info(f"My API key is: {api_token}")
@@ -36,9 +47,9 @@ def main():
         # Prepare row
         cleaned.append([formatted_date, description, f"{tx.amount:.2f}"])
     if "matteo" in EMAIL:
-        csv_filename = "matteo_sodexo.csv"
+        csv_filename = "mat_sodexo.csv"
     elif "giulia" in EMAIL:
-        csv_filename = "giulia_sodexo.csv"
+        csv_filename = "giu_sodexo.csv"
 
     # Write to CSV with semicolon separator
     with open(csv_filename, "w", newline="", encoding="utf-8") as csvfile:
@@ -52,7 +63,7 @@ def main():
     return csv_filename
 
 def send_post_request(json_config, csv_file):
-    url = 'http://192.168.178.253:6901/autoupload?secret=KRdzb6punx7QwWtF'
+    
     headers = {
         'Accept': 'application/json',
         'Authorization': f'Bearer {api_token}'
@@ -72,14 +83,14 @@ def send_post_request(json_config, csv_file):
 if __name__ == "__main__":
     for user in ["matteo","giulia"]:
         if user == "matteo":
-            EMAIL = "matteo.beg@gmail.com"
-            PASSWORD = "001122aA@"
-            json_config = "Sodexo_Matteo_config.json"
+            EMAIL = mat_email
+            PASSWORD = mat_pwd
+            json_config = "Sodexo_Mat_config.json"
             csv_filename = main()
             send_post_request(json_config, csv_filename)
         elif user == "giulia":
-            json_config = "Sodexo_Giulia_config.json"
-            EMAIL = "giuliacaputo0@gmail.com"
-            PASSWORD = "Thebeatles92"
+            json_config = "Sodexo_Giu_config.json"
+            EMAIL = giu_email
+            PASSWORD = giu_pwd
             csv_filename = main()
             send_post_request(json_config, csv_filename)
