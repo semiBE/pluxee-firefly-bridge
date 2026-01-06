@@ -1,0 +1,2 @@
+pluxee-api
+requests
