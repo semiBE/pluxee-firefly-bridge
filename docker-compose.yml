@@ -1,0 +1,15 @@
+services:
+  firefly-pluxee-bridge:
+    build: https://github.com/semiBE/pluxee-firefly-bridge.git#main
+    container_name: firefly-pluxee-bridge
+    restart: no
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+    networks: 
+      - firefly-db_firefly_iii
+    env_file: stack.env
+
+networks:
+  firefly-db_firefly_iii:
+     driver: bridge
+     external: true
