@@ -68,12 +68,10 @@ def main():
     print("\n--- CSV Content Preview ---")
     header = "Date, Description, Amount"
     print(header)
-    logger.info("CSV Content Preview:")
     
     for row in cleaned:
         row_str = ", ".join(row)
         print(row_str)
-        logger.info(row_str)
     print("---------------------------\n")
     # --------------------------------------
 
@@ -110,10 +108,6 @@ def send_post_request(json_config, csv_file):
     else:
         logger.info(f"POST request for {csv_file} failed. Status code {response.status_code}.")
         print(f"POST request failed with status code {response.status_code}.")
-        #logger.error(f"POST request for {csv_file} failed.")
-        #logger.error(f"Status Code: {response.status_code}")
-        #logger.error(f"Response Body: {response.text}") # <--- THIS IS KEY
-        #print(f"Server says: {response.text}")
 
 if __name__ == "__main__":
     for user in ["matteo","giulia"]:
