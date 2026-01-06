@@ -1,6 +1,5 @@
 #Custom
 *.csv
-*.json
 *.sh
 
 # Byte-compiled / optimized / DLL files
