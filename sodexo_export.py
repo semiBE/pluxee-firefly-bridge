@@ -88,10 +88,10 @@ def send_post_request(json_config, csv_file):
     }
 
     with open(json_config, 'r') as test_f:
-    content = test_f.read()
-    logger.info(f"DEBUG: Sending JSON config ({json_config}). Length: {len(content)} chars.")
-    if len(content) == 0:
-        logger.error("DEBUG: THE JSON FILE IS EMPTY!")
+        content = test_f.read()
+        logger.info(f"DEBUG: Sending JSON config ({json_config}). Length: {len(content)} chars.")
+        if len(content) == 0:
+            logger.error("DEBUG: THE JSON FILE IS EMPTY!")
 
     response = requests.post(url, headers=headers, files=files)
     if response.status_code == 200:
@@ -100,10 +100,10 @@ def send_post_request(json_config, csv_file):
     else:
         logger.info(f"POST request for {csv_file} failed. Status code {response.status_code}.")
         print(f"POST request failed with status code {response.status_code}.")
-        logger.error(f"POST request for {csv_file} failed.")
-        logger.error(f"Status Code: {response.status_code}")
-        logger.error(f"Response Body: {response.text}") # <--- THIS IS KEY
-        print(f"Server says: {response.text}")
+        #logger.error(f"POST request for {csv_file} failed.")
+        #logger.error(f"Status Code: {response.status_code}")
+        #logger.error(f"Response Body: {response.text}") # <--- THIS IS KEY
+        #print(f"Server says: {response.text}")
 
 if __name__ == "__main__":
     for user in ["matteo","giulia"]:
