@@ -85,6 +85,8 @@ def send_post_request(json_config, csv_file):
     csv_path = os.path.join(BASE_DIR, csv_file)
     # 3. Debugging: Log exactly where we are looking
     logger.info(f"Looking for JSON config at: {json_path}")
+    logger.info(f"Looking for CSV file at: {csv_path}")
+
     if not os.path.exists(json_path):
         logger.error(f"FILE NOT FOUND: {json_path}")
         # List files in directory to help debug via logs
