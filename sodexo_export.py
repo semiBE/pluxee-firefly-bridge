@@ -12,6 +12,9 @@ from dotenv import load_dotenv
 # Load the .env file
 load_dotenv()
 
+# 1. Get the absolute path of the directory where sodexo_export.py is located
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # Configure logging for verbose Docker output
 logging.basicConfig(level=logging.INFO,stream=sys.stdout)
 logger = logging.getLogger(__name__)
@@ -77,23 +80,28 @@ def main():
     return csv_filename
 
 def send_post_request(json_config, csv_file):
-    
+    # 2. Construct absolute paths for both files
+    json_path = os.path.join(BASE_DIR, json_config)
+    csv_path = os.path.join(BASE_DIR, csv_file)
+    # 3. Debugging: Log exactly where we are looking
+    logger.info(f"Looking for JSON config at: {json_path}")
+    if not os.path.exists(json_path):
+        logger.error(f"FILE NOT FOUND: {json_path}")
+        # List files in directory to help debug via logs
+        logger.info(f"Files available in {BASE_DIR}: {os.listdir(BASE_DIR)}")
+        return
+
     headers = {
         'Accept': 'application/json',
         'Authorization': f'Bearer {api_token}'
     }
-    files = {
-        'importable': (csv_file, open(csv_file, 'rb')),
-        'json': (json_config, open(json_config,'rb'))
-    }
+    with open(csv_path, 'rb') as f_csv, open(json_path, 'rb') as f_json:
+        files = {
+            'importable': (csv_file, f_csv, 'text/csv'),
+            'json': (json_config, f_json, 'application/json')
+        }
+        response = requests.post(url, headers=headers, files=files)
 
-    with open(json_config, 'r') as test_f:
-        content = test_f.read()
-        logger.info(f"DEBUG: Sending JSON config ({json_config}). Length: {len(content)} chars.")
-        if len(content) == 0:
-            logger.error("DEBUG: THE JSON FILE IS EMPTY!")
-
-    response = requests.post(url, headers=headers, files=files)
     if response.status_code == 200:
         print(f"POST request for {csv_file} successful. Status code {response.status_code}.")
         logger.info(f"POST request for {csv_file} successful. Status code {response.status_code}.")
