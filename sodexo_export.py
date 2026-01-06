@@ -86,6 +86,13 @@ def send_post_request(json_config, csv_file):
         'importable': (csv_file, open(csv_file, 'rb')),
         'json': (json_config, open(json_config,'rb'))
     }
+
+    with open(json_config, 'r') as test_f:
+    content = test_f.read()
+    logger.info(f"DEBUG: Sending JSON config ({json_config}). Length: {len(content)} chars.")
+    if len(content) == 0:
+        logger.error("DEBUG: THE JSON FILE IS EMPTY!")
+
     response = requests.post(url, headers=headers, files=files)
     if response.status_code == 200:
         print(f"POST request for {csv_file} successful. Status code {response.status_code}.")
