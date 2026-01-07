@@ -29,7 +29,7 @@ url = os.environ.get("URL")
 logger.info(f"Target URL: {url}")
 logger.info(f"Token Length: {len(api_token) if api_token else 'EMPTY'}")
 #print(f"My API key is: {api_token}")
-logger.info(f"My API key is: {api_token}")
+#logger.info(f"My API key is: {api_token}")
 
 def main():
     # Authenticate
