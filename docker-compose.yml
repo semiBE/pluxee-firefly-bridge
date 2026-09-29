@@ -8,12 +8,12 @@ services:
     networks: 
       - firefly_iii
     environment:
-      - MAT_EMAIL: ${MAT_EMAIL}
-      - GIU_EMAIL: ${GIU_EMAIL}
-      - MAT_PWD: ${MAT_PWD}
-      - GIU_PWD: ${GIU_PWD}
-      - URL: ${URL}
-      - API_TOKEN: ${API_TOKEN}
+      MAT_EMAIL: ${MAT_EMAIL}
+      GIU_EMAIL: ${GIU_EMAIL}
+      MAT_PWD: ${MAT_PWD}
+      GIU_PWD: ${GIU_PWD}
+      URL: ${URL}
+      API_TOKEN: ${API_TOKEN}
 
 networks:
   firefly_iii:
